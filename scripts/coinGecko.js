@@ -32,19 +32,30 @@ const scrapeById = async (id) => {
     await fs.writeFile(path.join(dir, `${id}.json`), JSON.stringify(res.data, null, 2));
     console.log(`Data written to /export/coingecko/${id}.json`);
 }
+// Function to fetch market chart data from CoinGecko
 const scrapeByRange = async (id, from, to, vs_currency = "usd") => {
+  try {
     const res = await axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/range`, {
-        headers: {
-            "x-cg-demo-api-key": apikey
-        },
-        params: {
-            vs_currency,
-            from,
-            to
-        }
-    })
-    return res.data
-}
+      headers: {
+        "x-cg-demo-api-key": apikey
+      },
+      params: {
+        vs_currency,
+        from,
+        to
+      },
+      timeout: 0 // Infinite timeout
+    });
+    return res.data;
+  } catch (error) {
+    if (error.response && error.response.status === 429) {
+      console.log(`Rate limit hit for ${id}. Waiting 60 seconds before retrying...`);
+      await new Promise(resolve => setTimeout(resolve, 60000)); // Wait for 60 seconds
+      return scrapeByRange(id, from, to, vs_currency); // Retry the request
+    }
+    throw error;
+  }
+};
 module.exports = {
     scrapeTopByMarketCap,
     scrapeById,
