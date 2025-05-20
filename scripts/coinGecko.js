@@ -32,8 +32,21 @@ const scrapeById = async (id) => {
     await fs.writeFile(path.join(dir, `${id}.json`), JSON.stringify(res.data, null, 2));
     console.log(`Data written to /export/coingecko/${id}.json`);
 }
-
+const scrapeByRange = async (id, from, to, vs_currency = "usd") => {
+    const res = await axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/range`, {
+        headers: {
+            "x-cg-demo-api-key": apikey
+        },
+        params: {
+            vs_currency,
+            from,
+            to
+        }
+    })
+    return res.data
+}
 module.exports = {
     scrapeTopByMarketCap,
-    scrapeById
+    scrapeById,
+    scrapeByRange
 }

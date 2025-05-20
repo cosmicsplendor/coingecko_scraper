@@ -1,9 +1,4 @@
-const { scrapeTopByMarketCap, scrapeById } = require("./scripts/coinGecko");
-
-const missingids = [ "nem", "dash", "neo", "iota", "zcash", "qtum", "lisk", "waves" ];
-const scrape = async () => {
-    for (const id of missingids) {
-        await scrapeById(id);
-    }
-}
-scrape()
+const { scrapeTopByMarketCap, scrapeById, scrapeByRange } = require("./scripts/coinGecko");
+const max_safe_ts = new Date("2025-05-19").valueOf() / 1000;
+console.log(max_safe_ts);
+// scrapeByRange()
