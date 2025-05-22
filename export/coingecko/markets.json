@@ -1,368 +1,278 @@
 [
     {
+        "name": "Augur",
+        "id": "rep"
+    },
+    {
+        "name": "MaidSafeCoin",
+        "id": "maid"
+    },
+    {
+        "name": "Bitcoin Gold",
+        "id": "bitcoingold"
+    },
+    {
+        "name": "Bitshares",
+        "id": "bitshares"
+    },
+    {
+        "name": "Algorand",
+        "id": "algo"
+    },
+    {
+        "name": "Omisego",
+        "id": "omg"
+    },
+    {
+        "name": "Binance USD",
+        "id": "busd"
+    },
+    {
+        "name": "Polygon",
+        "id": "matic"
+    },
+    {
+        "name": "Tezos",
+        "id": "xtz"
+    },
+    {
+        "name": "EOS",
+        "id": "eos"
+    },
+    {
+        "name": "LUNA",
+        "id": "terra"
+    },
+    {
+        "name": "FTX Token",
+        "id": "ftx"
+    },
+    {
+        "name": "File Coin",
+        "id": "fil"
+    },
+    {
+        "name": "Bitcoin SV",
+        "id": "BSV"
+    },
+    {
         "name": "IOTA",
-        "id": "iota",
-        "image": "https://coin-images.coingecko.com/coins/images/692/large/IOTA_Thumbnail_%281%29.png?1743772896",
-        "start_date": "2016-07-11"
+        "id": "iota"
     },
     {
         "name": "Dash",
-        "id": "dash",
-        "image": "https://coin-images.coingecko.com/coins/images/19/large/dash-logo.png?1696501423",
-        "start_date": "2016-01-01"
+        "id": "dash"
     },
     {
         "name": "Lisk",
-        "id": "lisk",
-        "image": "https://coin-images.coingecko.com/coins/images/385/large/Lisk_logo.png?1722338450",
-        "start_date": "2016-05-24"
+        "id": "lisk"
     },
     {
         "name": "NEM",
-        "id": "nem",
-        "image": "https://coin-images.coingecko.com/coins/images/242/large/NEM_WC_Logo_200px.png?1696501595",
-        "start_date": "2016-01-01"
+        "id": "nem"
     },
     {
         "name": "NEO",
-        "id": "neo",
-        "image": "https://coin-images.coingecko.com/coins/images/480/large/NEO_512_512.png?1696501735",
-        "start_date": "2016-01-01"
+        "id": "neo"
     },
     {
         "name": "Qtum",
-        "id": "qtum",
-        "image": "https://coin-images.coingecko.com/coins/images/684/large/Qtum_Logo_blue_CG.png?1696501874",
-        "start_date": "2017-01-01"
+        "id": "qtum"
     },
     {
         "name": "Waves",
-        "id": "waves",
-        "image": "https://coin-images.coingecko.com/coins/images/425/large/waves.png?1696501700",
-        "start_date": "2016-06-02"
+        "id": "waves"
     },
     {
         "name": "Zcash",
-        "id": "zcash",
-        "image": "https://coin-images.coingecko.com/coins/images/486/large/circle-zcash-color.png?1696501740",
-        "start_date": "2016-10-28"
+        "id": "zcash"
     },
     {
         "name": "Bitcoin",
-        "id": "bitcoin",
-        "image": "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400",
-        "start_date": "2016-01-01"
+        "id": "bitcoin"
     },
     {
         "name": "Ethereum",
-        "id": "ethereum",
-        "image": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
-        "start_date": "2016-01-01"
+        "id": "ethereum"
     },
     {
         "name": "Tether",
-        "id": "tether",
-        "image": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
-        "start_date": "2016-01-01"
+        "id": "tether"
     },
     {
         "name": "XRP",
-        "id": "ripple",
-        "image": "https://coin-images.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png?1696501442",
-        "start_date": "2016-01-01"
+        "id": "ripple"
     },
     {
         "name": "BNB",
-        "id": "binancecoin",
-        "image": "https://coin-images.coingecko.com/coins/images/825/large/bnb-icon2_2x.png?1696501970",
-        "start_date": "2017-07-01"
+        "id": "binancecoin"
     },
     {
         "name": "Solana",
-        "id": "solana",
-        "image": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
-        "start_date": "2020-03-16"
+        "id": "solana"
     },
     {
         "name": "USDC",
-        "id": "usd-coin",
-        "image": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
-        "start_date": "2018-09-26"
+        "id": "usd-coin"
     },
     {
         "name": "Dogecoin",
-        "id": "dogecoin",
-        "image": "https://coin-images.coingecko.com/coins/images/5/large/dogecoin.png?1696501409",
-        "start_date": "2016-01-01"
+        "id": "dogecoin"
     },
     {
         "name": "Cardano",
-        "id": "cardano",
-        "image": "https://coin-images.coingecko.com/coins/images/975/large/cardano.png?1696502090",
-        "start_date": "2017-09-01"
+        "id": "cardano"
     },
     {
         "name": "TRON",
-        "id": "tron",
-        "image": "https://coin-images.coingecko.com/coins/images/1094/large/tron-logo.png?1696502193",
-        "start_date": "2017-09-25"
+        "id": "tron"
     },
     {
         "name": "Lido Staked Ether",
-        "id": "staked-ether",
-        "image": "https://coin-images.coingecko.com/coins/images/13442/large/steth_logo.png?1696513206",
-        "start_date": "2020-12-18"
+        "id": "staked-ether"
     },
     {
         "name": "Sui",
-        "id": "sui",
-        "image": "https://coin-images.coingecko.com/coins/images/26375/large/sui-ocean-square.png?1727791290",
-        "start_date": "2023-05-03"
+        "id": "sui"
     },
     {
         "name": "Chainlink",
-        "id": "chainlink",
-        "image": "https://coin-images.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
-        "start_date": "2017-09-01"
+        "id": "chainlink"
     },
     {
         "name": "Avalanche",
-        "id": "avalanche-2",
-        "image": "https://coin-images.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png?1696512369",
-        "start_date": "2020-09-21"
+        "id": "avalanche-2"
     },
     {
         "name": "Stellar",
-        "id": "stellar",
-        "image": "https://coin-images.coingecko.com/coins/images/100/large/fmpFRHHQ_400x400.jpg?1735231350",
-        "start_date": "2016-01-01"
+        "id": "stellar"
     },
     {
         "name": "Hyperliquid",
-        "id": "hyperliquid",
-        "image": "https://coin-images.coingecko.com/coins/images/50882/large/hyperliquid.jpg?1729431300",
-        "start_date": "2023-01-01"
+        "id": "hyperliquid"
     },
     {
         "name": "Shiba Inu",
-        "id": "shiba-inu",
-        "image": "https://coin-images.coingecko.com/coins/images/11939/large/shiba.png?1696511800",
-        "start_date": "2020-08-01"
+        "id": "shiba-inu"
     },
     {
         "name": "Hedera",
-        "id": "hedera-hashgraph",
-        "image": "https://coin-images.coingecko.com/coins/images/3688/large/hbar.png?1696504364",
-        "start_date": "2019-01-01"
-    },
-    {
-        "name": "LEO Token",
-        "id": "leo-token",
-        "image": "https://coin-images.coingecko.com/coins/images/8418/large/leo-token.png?1696508607",
-        "start_date": "2019-01-01"
+        "id": "hedera-hashgraph"
     },
     {
         "name": "Bitcoin Cash",
-        "id": "bitcoin-cash",
-        "image": "https://coin-images.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png?1696501932",
-        "start_date": "2017-08-01"
+        "id": "bitcoin-cash"
     },
     {
         "name": "Toncoin",
-        "id": "the-open-network",
-        "image": "https://coin-images.coingecko.com/coins/images/17980/large/photo_2024-09-10_17.09.00.jpeg?1725963446",
-        "start_date": "2020-01-01"
+        "id": "the-open-network"
     },
     {
         "name": "Litecoin",
-        "id": "litecoin",
-        "image": "https://coin-images.coingecko.com/coins/images/2/large/litecoin.png?1696501400",
-        "start_date": "2016-01-01"
+        "id": "litecoin"
     },
     {
         "name": "Polkadot",
-        "id": "polkadot",
-        "image": "https://coin-images.coingecko.com/coins/images/12171/large/polkadot.png?1696512008",
-        "start_date": "2020-05-26"
-    },
-    {
-        "name": "USDS",
-        "id": "usds",
-        "image": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
-        "start_date": "2023-01-01"
-    },
-    {
-        "name": "WETH",
-        "id": "weth",
-        "image": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
-        "start_date": "2016-08-01"
+        "id": "polkadot"
     },
     {
         "name": "Monero",
-        "id": "monero",
-        "image": "https://coin-images.coingecko.com/coins/images/69/large/monero_logo.png?1696501460",
-        "start_date": "2016-01-01"
-    },
-    {
-        "name": "Bitget Token",
-        "id": "bitget-token",
-        "image": "https://coin-images.coingecko.com/coins/images/11610/large/Bitget_logo.png?1736925727",
-        "start_date": "2021-01-01"
-    },
-    {
-        "name": "Binance Bridged USDT (BNB Smart Chain)",
-        "id": "binance-bridged-usdt-bnb-smart-chain",
-        "image": "https://coin-images.coingecko.com/coins/images/35021/large/USDT.png?1707233575",
-        "start_date": "2019-01-01"
-    },
-    {
-        "name": "Pepe",
-        "id": "pepe",
-        "image": "https://coin-images.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
-        "start_date": "2023-04-15"
+        "id": "monero"
     },
     {
         "name": "Pi Network",
-        "id": "pi-network",
-        "image": "https://coin-images.coingecko.com/coins/images/54342/large/pi_network.jpg?1739347576",
-        "start_date": "2019-03-14"
+        "id": "pi-network"
     },
     {
         "name": "WhiteBIT Coin",
-        "id": "whitebit",
-        "image": "https://coin-images.coingecko.com/coins/images/27045/large/wbt_token.png?1696526096",
-        "start_date": "2019-01-01"
+        "id": "whitebit"
     },
     {
         "name": "Aave",
-        "id": "aave",
-        "image": "https://coin-images.coingecko.com/coins/images/12645/large/aave-token-round.png?1720472354",
-        "start_date": "2020-01-02"
+        "id": "aave"
     },
     {
         "name": "Bittensor",
-        "id": "bittensor",
-        "image": "https://coin-images.coingecko.com/coins/images/28452/large/ARUsPeNQ_400x400.jpeg?1696527447",
-        "start_date": "2022-01-01"
+        "id": "bittensor"
     },
     {
         "name": "Dai",
-        "id": "dai",
-        "image": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
-        "start_date": "2019-01-01"
+        "id": "dai"
     },
     {
         "name": "Uniswap",
-        "id": "uniswap",
-        "image": "https://coin-images.coingecko.com/coins/images/12504/large/uniswap-logo.png?1720676669",
-        "start_date": "2018-09-07"
+        "id": "uniswap"
     },
     {
         "name": "NEAR Protocol",
-        "id": "near",
-        "image": "https://coin-images.coingecko.com/coins/images/10365/large/near.jpg?1696510367",
-        "start_date": "2020-10-14"
+        "id": "near"
     },
     {
         "name": "Aptos",
-        "id": "aptos",
-        "image": "https://coin-images.coingecko.com/coins/images/26455/large/aptos_round.png?1696525528",
-        "start_date": "2022-10-17"
+        "id": "aptos"
     },
     {
         "name": "OKB",
-        "id": "okb",
-        "image": "https://coin-images.coingecko.com/coins/images/4463/large/WeChat_Image_20220118095654.png?1696505053",
-        "start_date": "2018-01-01"
+        "id": "okb"
     },
     {
         "name": "Jito Staked SOL",
-        "id": "jito-staked-sol",
-        "image": "https://coin-images.coingecko.com/coins/images/28046/large/JitoSOL-200.png?1696527060",
-        "start_date": "2023-01-01"
+        "id": "jito-staked-sol"
     },
     {
         "name": "Cronos",
-        "id": "crypto-com-chain",
-        "image": "https://coin-images.coingecko.com/coins/images/7310/large/cro_token_logo.png?1696507599",
-        "start_date": "2021-03-25"
+        "id": "crypto-com-chain"
     },
     {
         "name": "Kaspa",
-        "id": "kaspa",
-        "image": "https://coin-images.coingecko.com/coins/images/25751/large/kaspa-icon-exchanges.png?1696524837",
-        "start_date": "2021-08-01"
+        "id": "kaspa"
     },
     {
         "name": "Tokenize Xchange",
-        "id": "tokenize-xchange",
-        "image": "https://coin-images.coingecko.com/coins/images/4984/large/TKX_-_Logo_-_RGB-15.png?1696505519",
-        "start_date": "2019-01-01"
+        "id": "tokenize-xchange"
     },
     {
         "name": "Ethereum Classic",
-        "id": "ethereum-classic",
-        "image": "https://coin-images.coingecko.com/coins/images/453/large/ethereum-classic-logo.png?1696501717",
-        "start_date": "2016-07-20"
+        "id": "ethereum-classic"
     },
     {
         "name": "Internet Computer",
-        "id": "internet-computer",
-        "image": "https://coin-images.coingecko.com/coins/images/14495/large/Internet_Computer_logo.png?1696514180",
-        "start_date": "2021-05-10"
+        "id": "internet-computer"
     },
     {
         "name": "Gate",
-        "id": "gatechain-token",
-        "image": "https://coin-images.coingecko.com/coins/images/8183/large/200X200.png?1735246724",
-        "start_date": "2019-04-21"
+        "id": "gatechain-token"
     },
     {
         "name": "Mantle",
-        "id": "mantle",
-        "image": "https://coin-images.coingecko.com/coins/images/30980/large/Mantle-Logo-mark.png?1739213200",
-        "start_date": "2023-07-18"
+        "id": "mantle"
     },
     {
         "name": "VeChain",
-        "id": "vechain",
-        "image": "https://coin-images.coingecko.com/coins/images/1167/large/VET.png?1742383283",
-        "start_date": "2016-01-01"
+        "id": "vechain"
     },
     {
         "name": "Render",
-        "id": "render-token",
-        "image": "https://coin-images.coingecko.com/coins/images/11636/large/rndr.png?1696511529",
-        "start_date": "2019-01-01"
+        "id": "render-token"
     },
     {
         "name": "Ethena Staked USDe",
-        "id": "ethena-staked-usde",
-        "image": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
-        "start_date": "2023-01-01"
+        "id": "ethena-staked-usde"
     },
     {
         "name": "sUSDS",
-        "id": "susds",
-        "image": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
-        "start_date": "2023-01-01"
+        "id": "susds"
     },
     {
         "name": "Ethena",
-        "id": "ethena",
-        "image": "https://coin-images.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
-        "start_date": "2023-01-01"
+        "id": "ethena"
     },
     {
         "name": "Cosmos Hub",
-        "id": "cosmos",
-        "image": "https://coin-images.coingecko.com/coins/images/1481/large/cosmos_hub.png?1696502525",
-        "start_date": "2019-01-01"
+        "id": "cosmos"
     },
     {
         "name": "USD1",
-        "id": "usd1-wlfi",
-        "image": "https://coin-images.coingecko.com/coins/images/54977/large/30Q2SFVH_400x400.jpg?1742998328",
-        "start_date": "2023-01-01"
-    }
+        "id": "usd1-wlfi"
+     }
 ]
