@@ -112,8 +112,8 @@ function dateToTimestamp(date) {
  * @returns {Promise<Array>} - Array of daily cryptocurrency data
  */
 async function extractHistoricalData() {
-    const startDate = new Date('2016-01-01');
-    const endDate = new Date('2025-05-20');
+    const startDate = new Date('2017-5-16');
+    const endDate = new Date('2017-5-16');
     const dates = generateDateRange(startDate, endDate);
     
     console.log(`Processing ${dates.length} days from ${startDate.toDateString()} to ${endDate.toDateString()}`);
