@@ -35,6 +35,7 @@ const scrapeById = async (id) => {
 // Function to fetch market chart data from CoinGecko
 const scrapeByRange = async (id, from, to, vs_currency = "usd") => {
   try {
+    console.log(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/range`)
     const res = await axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/range`, {
       headers: {
         "x-cg-demo-api-key": apikey
