@@ -62,9 +62,8 @@ const processWeeklyData = (dailyData, startDate) => {
     weekDays.forEach(dayCoins => {
       dayCoins.forEach(coin => {
         if (!coinStats.has(coin.name)) {
-          coinStats.set(coin.name, { prices: [], marketCaps: [] });
+          coinStats.set(coin.name, { marketCaps: [] });
         }
-        coinStats.get(coin.name).prices.push(coin.price || 0);
         coinStats.get(coin.name).marketCaps.push(coin.marketCap || 0);
       });
     });
@@ -72,12 +71,10 @@ const processWeeklyData = (dailyData, startDate) => {
     // Calculate averages for each coin
     const weeklyCoins = [];
     coinStats.forEach((stats, name) => {
-      const avgPrice = stats.prices.reduce((sum, price) => sum + price, 0) / stats.prices.length;
       const avgMarketCap = stats.marketCaps.reduce((sum, cap) => sum + cap, 0) / stats.marketCaps.length;
       
       weeklyCoins.push({
         name,
-        price: avgPrice,
         marketCap: avgMarketCap
       });
     });
@@ -115,23 +112,18 @@ const applyRollingAverage = (weeklyData) => {
     
     allCoins.forEach(coinName => {
       const coinData = [currentWeek, prevWeek1, prevWeek2].map(week => 
-        week.coins.find(coin => coin.name === coinName) || { price: 0, marketCap: 0 }
+        week.coins.find(coin => coin.name === coinName) || { marketCap: 0 }
       );
       
-      // Calculate weighted averages
-      const weightedPrice = coinData.reduce((sum, coin, idx) => 
-        sum + (coin.price * weights[idx]), 0
-      );
-      
+      // Calculate weighted average for market cap
       const weightedMarketCap = coinData.reduce((sum, coin, idx) => 
         sum + (coin.marketCap * weights[idx]), 0
       );
       
-      // Only include if coin has some presence in recent weeks
-      if (weightedPrice > 0 || weightedMarketCap > 0) {
+      // Only include if coin has some market cap presence in recent weeks
+      if (weightedMarketCap > 0) {
         smoothedCoins.push({
           name: coinName,
-          price: weightedPrice,
           marketCap: weightedMarketCap
         });
       }
@@ -182,8 +174,7 @@ const scrapeCoinMarketCapData = async () => {
       // Extract only name and marketCap fields
       const processedCoins = rawData.map(coin => ({
         name: coin.name,
-        marketCap: coin.marketCap,
-        price: coin.price // Also keeping price for averaging
+        marketCap: coin.marketCap
       }));
       
       scrapedData.push({
