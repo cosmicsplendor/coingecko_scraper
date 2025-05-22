@@ -1,113 +1,1861 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Coin Market Cap Bar Race</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #1a1a1a;
+        }
+        #chart-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .bar {
+            shape-rendering: crispEdges;
+        }
+        .bar-label {
+            font-size: 12px;
+            fill: #333;
+            text-anchor: start; /* For values at end of bar */
+        }
+        .axis-label {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .y-axis .tick text {
+            font-size: 11px;
+            fill: #555;
+        }
+        .x-axis .tick text {
+            font-size: 10px;
+            fill: #555;
+        }
+        #date-display {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #007bff;
+            text-align: right;
+        }
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            text-anchor: middle;
+        }
+    </style>
 </head>
-
 <body>
-    <div class="cmc-table__table-wrapper-outer">
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th class="cmc-table__cell cmc-table__header cmc-table__cell--sticky cmc-table__cell--sortable cmc-table__cell--left cmc-table__cell--sort-by__rank"
-                            aria-label="Rank: activate to sort column ascending">Rank</th>
-                        <th class="cmc-table__cell cmc-table__header cmc-table__cell--sticky cmc-table__cell--sortable cmc-table__cell--left cmc-table__cell--sort-by__name"
-                            aria-label="Name: activate to sort column ascending">Name</th>
-                        <th class="cmc-table__cell cmc-table__header cmc-table__cell--sortable cmc-table__cell--left cmc-table__cell--sort-by__symbol"
-                            aria-label="Symbol: activate to sort column ascending">Symbol</th>
-                        <th class="cmc-table__cell cmc-table__header cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__market-cap"
-                            aria-label="Market Cap: activate to sort column descending">Market Cap</th>
-                        <th class="cmc-table__cell cmc-table__header cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__price"
-                            aria-label="Price: activate to sort column descending">Price</th>
-                        <th class="cmc-table__cell cmc-table__header cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__circulating-supply"
-                            aria-label="Circulating Supply: activate to sort column descending">Circulating Supply</th>
-                        <th class="cmc-table__cell cmc-table__header cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__volume-24-h"
-                            aria-label="volume (24h): activate to sort column descending">volume (24h)</th>
-                        <th class="cmc-table__cell cmc-table__header cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__percent-change-1-h"
-                            aria-label="% 1h: activate to sort column descending">% 1h</th>
-                        <th class="cmc-table__cell cmc-table__header cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__percent-change-24-h"
-                            aria-label="% 24h: activate to sort column descending">% 24h</th>
-                        <th class="cmc-table__cell cmc-table__header cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__percent-change-7-d"
-                            aria-label="% 7d: activate to sort column descending">% 7d</th>
-                        <th class="cmc-table__cell cmc-table__header cmc-table__cell--right"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="cmc-table-row" style="display:table-row">
-                        <td
-                            class="cmc-table__cell cmc-table__cell--sticky cmc-table__cell--sortable cmc-table__cell--left cmc-table__cell--sort-by__rank">
-                            <div class="">1</div>
-                        </td>
-                        <td
-                            class="cmc-table__cell cmc-table__cell--sticky cmc-table__cell--sortable cmc-table__cell--left cmc-table__cell--sort-by__name">
-                            <div
-                                class="sc-22e34915-0 eCmHEa cmc-table__column-name cmc-table__column-name--narrow-layout">
-                                <img src="https://s2.coinmarketcap.com/static/img/coins/32x32/1.png" alt="Bitcoin"
-                                    width="16" height="16" class="cmc-static-icon cmc-static-icon-1"><a
-                                    href="/currencies/bitcoin/" title="Bitcoin"
-                                    class="cmc-table__column-name--symbol cmc-link">BTC</a><a
-                                    href="/currencies/bitcoin/" title="Bitcoin"
-                                    class="cmc-table__column-name--name cmc-link">Bitcoin</a></div>
-                        </td>
-                        <td
-                            class="cmc-table__cell cmc-table__cell--sortable cmc-table__cell--left cmc-table__cell--sort-by__symbol">
-                            <div class="">BTC</div>
-                        </td>
-                        <td
-                            class="cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__market-cap">
-                            <div>$11,379,661,042.38</div>
-                        </td>
-                        <td
-                            class="cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__price">
-                            <div>$933.53</div>
-                        </td>
-                        <td
-                            class="cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__circulating-supply">
-                            <div class="">12,189,925<!-- --> BTC</div>
-                        </td>
-                        <td
-                            class="cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__volume-24-h">
-                            <a href="/currencies/bitcoin/#markets/" class="cmc-link">$72,898,520.00</a></td>
-                        <td
-                            class="cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__percent-change-1-h">
-                            <div class="cmc--change-positive">0.25<!-- -->%</div>
-                        </td>
-                        <td
-                            class="cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__percent-change-24-h">
-                            <div class="cmc--change-positive">8.36<!-- -->%</div>
-                        </td>
-                        <td
-                            class="cmc-table__cell cmc-table__cell--sortable cmc-table__cell--right cmc-table__cell--sort-by__percent-change-7-d">
-                            <div class="cmc--change-positive">25.84<!-- -->%</div>
-                        </td>
-                        <td class="cmc-table__cell cmc-table__cell--right">
-                            <div class="sc-63cc44da-0 btgsba">
-                                <div class="sc-52620346-0 jPVjnK cmc-popover">
-                                    <div class="cmc-popover__trigger"><svg xmlns="http://www.w3.org/2000/svg"
-                                            fill="currentColor" height="16px" width="16px" viewBox="0 0 24 24"
-                                            class="sc-4c05d6ef-0 bhVhAi">
-                                            <path
-                                                d="M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z">
-                                            </path>
-                                            <path
-                                                d="M5 14C6.10457 14 7 13.1046 7 12C7 10.8954 6.10457 10 5 10C3.89543 10 3 10.8954 3 12C3 13.1046 3.89543 14 5 14Z">
-                                            </path>
-                                            <path
-                                                d="M19 14C20.1046 14 21 13.1046 21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14Z">
-                                            </path>
-                                        </svg></div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</body>
+    <h1>Coin Market Cap Race</h1>
 
+    <div id="chart-container">
+        <div id="date-display">Date: YYYY-MM-DD</div>
+        <svg id="chart"></svg>
+    </div>
+
+    <!--
+    PASTE YOUR DATA HERE
+    Corrected Example structure:
+    [
+        { "year": 2023, "month": 1, "day": 1, "coins": ["Bitcoin", 500000000000, "Ethereum", 200000000000, ... 10 more pairs] },
+        { "year": 2023, "month": 1, "day": 2, "coins": ["Bitcoin", 510000000000, "Ethereum", 205000000000, ... 10 more pairs] },
+        ...
+    ]
+    Note: "month" is 1-indexed (1 for January, 12 for December).
+    The `coins` array should have 24 items (12 names, 12 market caps).
+    -->
+    <script type="application/json" id="raceData">
+ [
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 1,
+    "coins": [
+      "Bitcoin",
+      6529295683.57,
+      "XRP",
+      199716546.06,
+      "Litecoin",
+      153910921.49,
+      "Ethereum",
+      71980416.23,
+      "Dash",
+      20614654.86,
+      "Dogecoin",
+      15821162.83,
+      "Peercoin",
+      9511809.31,
+      "BitShares",
+      8777084.45,
+      "Stellar",
+      8456618.58,
+      "Nxt",
+      6677561.14,
+      "MaidSafeCoin",
+      6514439.9,
+      "Namecoin",
+      6023931.77
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 2,
+    "coins": [
+      "Bitcoin",
+      6517388016.4,
+      "XRP",
+      203395026.08,
+      "Litecoin",
+      153658312.15,
+      "Ethereum",
+      71176663.64,
+      "Dash",
+      20031358.63,
+      "Dogecoin",
+      15449434.86,
+      "Peercoin",
+      9722577.38,
+      "BitShares",
+      8670491.98,
+      "Stellar",
+      8423122.87,
+      "Nxt",
+      7197812.25,
+      "MaidSafeCoin",
+      6643212.32,
+      "Factom",
+      5733293.49
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 3,
+    "coins": [
+      "Bitcoin",
+      6467437079.85,
+      "XRP",
+      201799631.27,
+      "Litecoin",
+      152873521.2,
+      "Ethereum",
+      73843277.55,
+      "Dash",
+      19794713.11,
+      "Dogecoin",
+      14940681.5,
+      "Peercoin",
+      9756958.98,
+      "BitShares",
+      8591687.58,
+      "Stellar",
+      8436464.84,
+      "Nxt",
+      6863998.34,
+      "MaidSafeCoin",
+      6789469.94,
+      "Namecoin",
+      6073338.46
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 4,
+    "coins": [
+      "Bitcoin",
+      6515715687.48,
+      "XRP",
+      199807624.92,
+      "Litecoin",
+      153468159,
+      "Ethereum",
+      72543724.16,
+      "Dash",
+      20284361.03,
+      "Dogecoin",
+      14725895.44,
+      "Peercoin",
+      9657063.18,
+      "BitShares",
+      8539932.35,
+      "Stellar",
+      8456963.23,
+      "MaidSafeCoin",
+      6710258.02,
+      "Nxt",
+      6643630.36,
+      "Bytecoin",
+      5912485.16
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 5,
+    "coins": [
+      "Bitcoin",
+      6500389453.44,
+      "XRP",
+      202711294.37,
+      "Litecoin",
+      152390477.63,
+      "Ethereum",
+      72240965.32,
+      "Dash",
+      20333610.53,
+      "Dogecoin",
+      14057847.36,
+      "Peercoin",
+      9339645.2,
+      "BitShares",
+      8551677.59,
+      "Stellar",
+      8325931.81,
+      "MaidSafeCoin",
+      6642333.97,
+      "Nxt",
+      6406075.34,
+      "Bytecoin",
+      5935867.96
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 6,
+    "coins": [
+      "Bitcoin",
+      6458937669.95,
+      "XRP",
+      201334897.98,
+      "Litecoin",
+      151734728.76,
+      "Ethereum",
+      72317132.72,
+      "Dash",
+      20686018.94,
+      "Dogecoin",
+      13795912.41,
+      "Peercoin",
+      9242131.78,
+      "BitShares",
+      8234772.21,
+      "Stellar",
+      8087927.55,
+      "MaidSafeCoin",
+      7974998.97,
+      "Nxt",
+      6426148.08,
+      "Emercoin",
+      6298096.51
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 7,
+    "coins": [
+      "Bitcoin",
+      6896276384.09,
+      "XRP",
+      202538631.85,
+      "Litecoin",
+      158399726.81,
+      "Ethereum",
+      71667118.75,
+      "Dash",
+      20719646,
+      "Dogecoin",
+      14281942.84,
+      "Peercoin",
+      9752206,
+      "Stellar",
+      8357343.33,
+      "MaidSafeCoin",
+      7781626.64,
+      "BitShares",
+      7559004.82,
+      "Nxt",
+      6564607.41,
+      "Bytecoin",
+      6258178.36
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 8,
+    "coins": [
+      "Bitcoin",
+      6825697861.61,
+      "XRP",
+      198988087.02,
+      "Litecoin",
+      156900939.25,
+      "Ethereum",
+      75099821.94,
+      "Dash",
+      20257053.89,
+      "Dogecoin",
+      16237218.84,
+      "Peercoin",
+      9532061.43,
+      "Stellar",
+      8133675.55,
+      "MaidSafeCoin",
+      7904678,
+      "BitShares",
+      7411260.58,
+      "Nxt",
+      6464328.47,
+      "Factom",
+      6420266.71
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 9,
+    "coins": [
+      "Bitcoin",
+      6742760333.18,
+      "XRP",
+      200621525.05,
+      "Litecoin",
+      156586314.79,
+      "Ethereum",
+      75128342.2,
+      "Dash",
+      19494304.57,
+      "Dogecoin",
+      18447041.24,
+      "Peercoin",
+      9557293.94,
+      "Stellar",
+      8461679.54,
+      "BitShares",
+      7967325.15,
+      "MaidSafeCoin",
+      7711052.8,
+      "Nxt",
+      6806581.54,
+      "Factom",
+      6721552.7
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 10,
+    "coins": [
+      "Bitcoin",
+      6750434827.13,
+      "XRP",
+      199750841.19,
+      "Litecoin",
+      155590615.73,
+      "Ethereum",
+      76097622.22,
+      "Dash",
+      20209347.56,
+      "Dogecoin",
+      17113888.24,
+      "Peercoin",
+      9525077.03,
+      "Stellar",
+      8539671.95,
+      "MaidSafeCoin",
+      7693157.93,
+      "BitShares",
+      7685858.51,
+      "Nxt",
+      6400114.43,
+      "Factom",
+      6280052.62
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 11,
+    "coins": [
+      "Bitcoin",
+      6758935765.91,
+      "XRP",
+      197691806.29,
+      "Litecoin",
+      156518365.95,
+      "Ethereum",
+      80874194.33,
+      "Dash",
+      19325932.53,
+      "Dogecoin",
+      17516763.77,
+      "Peercoin",
+      9728134.19,
+      "Stellar",
+      8414581.13,
+      "MaidSafeCoin",
+      7961704.89,
+      "BitShares",
+      7649675.29,
+      "Factom",
+      6662139.1,
+      "Bytecoin",
+      6625949.55
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 12,
+    "coins": [
+      "Bitcoin",
+      6568799216.35,
+      "XRP",
+      196341037.55,
+      "Litecoin",
+      153806470.57,
+      "Ethereum",
+      86951548.32,
+      "Dash",
+      18602473.72,
+      "Dogecoin",
+      18450683.97,
+      "Factom",
+      11322071.93,
+      "YbCoin",
+      10195672.21,
+      "Peercoin",
+      10032672.56,
+      "Stellar",
+      8433414.3,
+      "MaidSafeCoin",
+      8031826.92,
+      "BitShares",
+      7983550.36
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 13,
+    "coins": [
+      "Bitcoin",
+      6520360089.36,
+      "XRP",
+      194303882.19,
+      "Litecoin",
+      153077405.29,
+      "Ethereum",
+      85775792.47,
+      "Dash",
+      19022740.24,
+      "Dogecoin",
+      18178749.64,
+      "Factom",
+      10465618.61,
+      "Peercoin",
+      10350380.7,
+      "Nxt",
+      8991422.1,
+      "Stellar",
+      8823353.83,
+      "YbCoin",
+      8514556.96,
+      "BitShares",
+      8265618.13
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 14,
+    "coins": [
+      "Bitcoin",
+      6490637040.19,
+      "XRP",
+      185440544.76,
+      "Litecoin",
+      152683572.49,
+      "Ethereum",
+      90714115.14,
+      "Dash",
+      20879745.17,
+      "Dogecoin",
+      17949678.89,
+      "Emercoin",
+      10753120.33,
+      "Peercoin",
+      10452670.45,
+      "Factom",
+      9818686.47,
+      "Stellar",
+      9258684.32,
+      "Nxt",
+      8469796.36,
+      "BitShares",
+      8079950.44
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 15,
+    "coins": [
+      "Bitcoin",
+      5496592878.76,
+      "XRP",
+      175378486.55,
+      "Litecoin",
+      132055721.01,
+      "Ethereum",
+      92150060.81,
+      "Dash",
+      20628800.9,
+      "Dogecoin",
+      15313286.18,
+      "Emercoin",
+      9346070.73,
+      "Peercoin",
+      8464673.27,
+      "Stellar",
+      8404843.83,
+      "Factom",
+      8341930.43,
+      "BitShares",
+      7809319.46,
+      "Nxt",
+      7073269.17
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 16,
+    "coins": [
+      "Bitcoin",
+      5848068793.84,
+      "XRP",
+      171445026.35,
+      "Litecoin",
+      136073739.8,
+      "Ethereum",
+      93117339.42,
+      "Dash",
+      23918029.32,
+      "Dogecoin",
+      15919957.52,
+      "Peercoin",
+      9313980.4,
+      "Emercoin",
+      9264090.42,
+      "Stellar",
+      8454258.45,
+      "Factom",
+      7945790.39,
+      "BitShares",
+      7813395.57,
+      "Nxt",
+      7109703.34
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 17,
+    "coins": [
+      "Bitcoin",
+      5770476777.82,
+      "XRP",
+      176601304.5,
+      "Litecoin",
+      133438085.99,
+      "Ethereum",
+      101329062.02,
+      "Dash",
+      30466572.18,
+      "Dogecoin",
+      15626952.07,
+      "Peercoin",
+      9427550.46,
+      "Factom",
+      8472205.53,
+      "Stellar",
+      8293148.47,
+      "Emercoin",
+      7754919.94,
+      "BitShares",
+      7708844.07,
+      "Nxt",
+      6990852.95
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 18,
+    "coins": [
+      "Bitcoin",
+      5845654193.86,
+      "XRP",
+      178621281.06,
+      "Litecoin",
+      134488735.05,
+      "Ethereum",
+      108912303.86,
+      "Dash",
+      26901084.88,
+      "Dogecoin",
+      15528540.12,
+      "Peercoin",
+      9159383.94,
+      "MaidSafeCoin",
+      8748941.77,
+      "Stellar",
+      8279059.78,
+      "Factom",
+      8265992.28,
+      "BitShares",
+      7712958.96,
+      "Emercoin",
+      7066551.16
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 19,
+    "coins": [
+      "Bitcoin",
+      5740938116.94,
+      "XRP",
+      176766205.32,
+      "Litecoin",
+      133141030.51,
+      "Ethereum",
+      104750963.31,
+      "Dash",
+      23818954.6,
+      "Dogecoin",
+      15215276.83,
+      "Peercoin",
+      9042660.01,
+      "Stellar",
+      8834616.11,
+      "MaidSafeCoin",
+      8566886.82,
+      "Factom",
+      7863615.02,
+      "BitShares",
+      7713557.18,
+      "Nxt",
+      6940195.67
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 20,
+    "coins": [
+      "Bitcoin",
+      6347833732.8,
+      "XRP",
+      180460567.91,
+      "Litecoin",
+      149562582.21,
+      "Ethereum",
+      117043275.93,
+      "Dash",
+      29398227.95,
+      "Dogecoin",
+      17265725.53,
+      "Peercoin",
+      9671268.13,
+      "Stellar",
+      8810614.42,
+      "Factom",
+      8158038.42,
+      "BitShares",
+      8030133.52,
+      "MaidSafeCoin",
+      7819119.97,
+      "Nxt",
+      7127651.27
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 21,
+    "coins": [
+      "Bitcoin",
+      6198663325.86,
+      "XRP",
+      178169916,
+      "Litecoin",
+      142203258.62,
+      "Ethereum",
+      118743652.78,
+      "Dash",
+      31696914.32,
+      "Dogecoin",
+      16776191.31,
+      "Peercoin",
+      9393116.63,
+      "Factom",
+      8681739.84,
+      "Stellar",
+      8407671.93,
+      "BitShares",
+      7802032.92,
+      "MaidSafeCoin",
+      7422716.02,
+      "Nxt",
+      6836685.99
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 22,
+    "coins": [
+      "Bitcoin",
+      5780761454.17,
+      "XRP",
+      171522986.85,
+      "Litecoin",
+      135880568.84,
+      "Ethereum",
+      114783695.45,
+      "Dash",
+      31585581.8,
+      "Dogecoin",
+      17291492.68,
+      "Factom",
+      9104075.78,
+      "Peercoin",
+      9026017.05,
+      "Stellar",
+      8242521.41,
+      "BitShares",
+      7725538.42,
+      "MaidSafeCoin",
+      7212738.54,
+      "Nxt",
+      7117828.64
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 23,
+    "coins": [
+      "Bitcoin",
+      5858053376.5,
+      "XRP",
+      171714749.07,
+      "Ethereum",
+      150874753.67,
+      "Litecoin",
+      137112258.96,
+      "Dash",
+      27702266.78,
+      "Dogecoin",
+      17713606.28,
+      "Factom",
+      9078332.78,
+      "Peercoin",
+      9055431.03,
+      "Stellar",
+      8202315.85,
+      "MaidSafeCoin",
+      7885477.41,
+      "YbCoin",
+      7843607.4,
+      "BitShares",
+      7721439.08
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 24,
+    "coins": [
+      "Bitcoin",
+      6093789879.14,
+      "XRP",
+      175044671.31,
+      "Ethereum",
+      163819815.56,
+      "Litecoin",
+      140583376.22,
+      "Dash",
+      27109155.59,
+      "Dogecoin",
+      19860109.39,
+      "Peercoin",
+      9558437.96,
+      "Factom",
+      8966776.63,
+      "MaidSafeCoin",
+      8748763.91,
+      "Stellar",
+      8336340.93,
+      "BitShares",
+      7852410.6,
+      "YbCoin",
+      7423599.37
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 25,
+    "coins": [
+      "Bitcoin",
+      5925345606.92,
+      "Ethereum",
+      191276399.36,
+      "XRP",
+      174168368.47,
+      "Litecoin",
+      138255102.79,
+      "Dash",
+      24785810.28,
+      "Dogecoin",
+      21768524.36,
+      "Peercoin",
+      9143721.68,
+      "Factom",
+      8501598.1,
+      "MaidSafeCoin",
+      8369448.97,
+      "Stellar",
+      8269283.06,
+      "BitShares",
+      7978182.46,
+      "Nxt",
+      7659457.73
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 26,
+    "coins": [
+      "Bitcoin",
+      5933373619.01,
+      "XRP",
+      183813603,
+      "Ethereum",
+      174275805.63,
+      "Litecoin",
+      139521696.19,
+      "Dogecoin",
+      36635905.76,
+      "Dash",
+      27885530.56,
+      "Factom",
+      11403124.95,
+      "VPNCoin",
+      11213476.58,
+      "Peercoin",
+      9734926.52,
+      "Stellar",
+      9197994.46,
+      "BitShares",
+      9045383.12,
+      "MaidSafeCoin",
+      8989634.47
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 27,
+    "coins": [
+      "Bitcoin",
+      5977550596.54,
+      "XRP",
+      220680544.24,
+      "Ethereum",
+      182923327.51,
+      "Litecoin",
+      145437119.64,
+      "Dogecoin",
+      46802248.93,
+      "Dash",
+      25906328.49,
+      "Nxt",
+      12028713.24,
+      "Factom",
+      11670356.23,
+      "Stellar",
+      10810362.46,
+      "Peercoin",
+      10757277.7,
+      "MaidSafeCoin",
+      10725862.54,
+      "BitShares",
+      10137234.94
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 28,
+    "coins": [
+      "Bitcoin",
+      5756703857.17,
+      "XRP",
+      211185649.51,
+      "Ethereum",
+      193551134.5,
+      "Litecoin",
+      138078983.52,
+      "Dogecoin",
+      35397459.94,
+      "Dash",
+      26090493.72,
+      "Peercoin",
+      10107878.64,
+      "MaidSafeCoin",
+      9817138.81,
+      "Factom",
+      9632700.13,
+      "BitShares",
+      9518420.12,
+      "Stellar",
+      9227580.27,
+      "Nxt",
+      9120968.69
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 29,
+    "coins": [
+      "Bitcoin",
+      5745990427.33,
+      "XRP",
+      231998518.28,
+      "Ethereum",
+      191198188.06,
+      "Litecoin",
+      137730078.82,
+      "Dogecoin",
+      32549439.26,
+      "Dash",
+      27124402.15,
+      "Peercoin",
+      10101153.35,
+      "Stellar",
+      9131889.99,
+      "Emercoin",
+      9065039.62,
+      "Factom",
+      8867074.72,
+      "MaidSafeCoin",
+      8774550.42,
+      "BitShares",
+      8769505.58
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 30,
+    "coins": [
+      "Bitcoin",
+      5729295707.47,
+      "XRP",
+      225029057.27,
+      "Ethereum",
+      187435629.93,
+      "Litecoin",
+      136414845.1,
+      "Dogecoin",
+      26543373.98,
+      "Dash",
+      26503055.4,
+      "Peercoin",
+      9755387.82,
+      "MaidSafeCoin",
+      9441340.64,
+      "Emercoin",
+      9254851.86,
+      "Factom",
+      8659203.88,
+      "Stellar",
+      8392028.96,
+      "BitShares",
+      8333071.21
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 1,
+    "day": 31,
+    "coins": [
+      "Bitcoin",
+      5587251013.45,
+      "XRP",
+      217061553.57,
+      "Ethereum",
+      176834647.03,
+      "Litecoin",
+      135182626.61,
+      "Dogecoin",
+      28502900.06,
+      "Dash",
+      25420327.76,
+      "Peercoin",
+      9746278.43,
+      "MaidSafeCoin",
+      9064662.44,
+      "Emercoin",
+      8862581.16,
+      "Stellar",
+      8591481.06,
+      "BitShares",
+      8507406.78,
+      "Nxt",
+      8190742.19
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 1,
+    "coins": [
+      "Bitcoin",
+      5653741138.89,
+      "XRP",
+      221896025.22,
+      "Ethereum",
+      169654756.91,
+      "Litecoin",
+      136343305.35,
+      "Dogecoin",
+      27810850.52,
+      "Dash",
+      25486534.82,
+      "Peercoin",
+      9572782.41,
+      "MaidSafeCoin",
+      8734883.98,
+      "Stellar",
+      8670001.13,
+      "BitShares",
+      8560037.83,
+      "Nxt",
+      8002617.44,
+      "Factom",
+      7276862.08
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 2,
+    "coins": [
+      "Bitcoin",
+      5676526364,
+      "XRP",
+      229580808.59,
+      "Ethereum",
+      187200943.5,
+      "Litecoin",
+      136331421.07,
+      "Dogecoin",
+      26996395.2,
+      "Dash",
+      25405271.8,
+      "Peercoin",
+      9509889.11,
+      "Stellar",
+      8687946.23,
+      "MaidSafeCoin",
+      8351012.93,
+      "BitShares",
+      8323340.88,
+      "Nxt",
+      7927447.82,
+      "YbCoin",
+      7216727.15
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 3,
+    "coins": [
+      "Bitcoin",
+      5609971454.82,
+      "XRP",
+      233457594.58,
+      "Ethereum",
+      194099590.86,
+      "Litecoin",
+      135123759.17,
+      "Dogecoin",
+      27288814.11,
+      "Dash",
+      25856133.02,
+      "Peercoin",
+      9417310.47,
+      "Stellar",
+      8739833.61,
+      "Nxt",
+      8151019.54,
+      "MaidSafeCoin",
+      8128988.92,
+      "BitShares",
+      8128039.73,
+      "Factom",
+      7419558.49
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 4,
+    "coins": [
+      "Bitcoin",
+      5909518466.53,
+      "XRP",
+      236439086.39,
+      "Ethereum",
+      197953064.48,
+      "Litecoin",
+      140277404.77,
+      "Dogecoin",
+      29549086.6,
+      "Dash",
+      26595856.55,
+      "Peercoin",
+      9682178.17,
+      "MaidSafeCoin",
+      9160471.51,
+      "Factom",
+      9019632.02,
+      "Stellar",
+      8720718.3,
+      "Nxt",
+      8370773.77,
+      "BitShares",
+      8347273.28
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 5,
+    "coins": [
+      "Bitcoin",
+      5865131582.03,
+      "XRP",
+      246331059.51,
+      "Ethereum",
+      195018703.23,
+      "Litecoin",
+      139198693.69,
+      "Dogecoin",
+      31456865.09,
+      "Dash",
+      26495599.36,
+      "Peercoin",
+      9588782.41,
+      "MaidSafeCoin",
+      9447213.43,
+      "Factom",
+      8927255.03,
+      "Stellar",
+      8871142.09,
+      "Nxt",
+      8695769.02,
+      "BitShares",
+      8614399.65
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 6,
+    "coins": [
+      "Bitcoin",
+      5714879203.32,
+      "XRP",
+      268722859.42,
+      "Ethereum",
+      194733933.95,
+      "Litecoin",
+      137541427.54,
+      "Dogecoin",
+      31526267.88,
+      "Dash",
+      26025549.61,
+      "Peercoin",
+      9439654.29,
+      "Stellar",
+      9015019.91,
+      "MaidSafeCoin",
+      8936429.49,
+      "Factom",
+      8602334.82,
+      "Nxt",
+      8485842.07,
+      "BitShares",
+      8483740.23
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 7,
+    "coins": [
+      "Bitcoin",
+      5718025977.03,
+      "XRP",
+      282831075.62,
+      "Ethereum",
+      227838725.16,
+      "Litecoin",
+      137008425.5,
+      "Dogecoin",
+      29359873.53,
+      "Dash",
+      26137313.91,
+      "Peercoin",
+      9664849.72,
+      "MaidSafeCoin",
+      9544462.26,
+      "BitShares",
+      9314632.58,
+      "Stellar",
+      8958879.68,
+      "Nxt",
+      8756743.46,
+      "Factom",
+      8452814.42
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 8,
+    "coins": [
+      "Bitcoin",
+      5671235132.87,
+      "XRP",
+      272413819.89,
+      "Ethereum",
+      244478740.86,
+      "Litecoin",
+      135996306.48,
+      "Dogecoin",
+      29553372.22,
+      "Dash",
+      25844060.83,
+      "Peercoin",
+      9444926.63,
+      "MaidSafeCoin",
+      9378757.06,
+      "Stellar",
+      8906885.87,
+      "BitShares",
+      8589030.91,
+      "Factom",
+      8570276.18,
+      "Nxt",
+      8347208.59
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 9,
+    "coins": [
+      "Bitcoin",
+      5712103683.4,
+      "Ethereum",
+      311075596.39,
+      "XRP",
+      266434264.61,
+      "Litecoin",
+      136900811.42,
+      "Dogecoin",
+      30070910.77,
+      "Dash",
+      24677102.36,
+      "Peercoin",
+      9423574.62,
+      "MaidSafeCoin",
+      9185263.36,
+      "Stellar",
+      8832520.66,
+      "BitShares",
+      8488659.42,
+      "Factom",
+      8410767.68,
+      "Nxt",
+      8384989.44
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 10,
+    "coins": [
+      "Bitcoin",
+      5799046960.74,
+      "Ethereum",
+      341305256.52,
+      "XRP",
+      267730980.55,
+      "Litecoin",
+      137549409.43,
+      "Dogecoin",
+      30713585.12,
+      "Dash",
+      23841936.37,
+      "MaidSafeCoin",
+      12945270.65,
+      "Factom",
+      9815788.18,
+      "Peercoin",
+      9500112.99,
+      "Stellar",
+      8942277.12,
+      "BitShares",
+      8789657.7,
+      "Nxt",
+      8206642.62
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 11,
+    "coins": [
+      "Bitcoin",
+      5770554093.8,
+      "Ethereum",
+      462770976.26,
+      "XRP",
+      266425946.22,
+      "Litecoin",
+      136722267.75,
+      "Dogecoin",
+      29863259.68,
+      "Dash",
+      20272982.87,
+      "MaidSafeCoin",
+      15553057.03,
+      "Factom",
+      10149906.13,
+      "BitShares",
+      9494085.71,
+      "Peercoin",
+      9401716.5,
+      "Stellar",
+      9084302.2,
+      "Nxt",
+      8129041.32
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 12,
+    "coins": [
+      "Bitcoin",
+      5842240913.58,
+      "Ethereum",
+      427037432.85,
+      "XRP",
+      272024093.92,
+      "Litecoin",
+      138377007.16,
+      "Dogecoin",
+      30990524.8,
+      "Dash",
+      23577863.27,
+      "MaidSafeCoin",
+      18477697,
+      "BitShares",
+      12265665.23,
+      "Stellar",
+      11338474.04,
+      "Peercoin",
+      10144016.53,
+      "Factom",
+      9938796.05,
+      "Nxt",
+      9318070.43
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 13,
+    "coins": [
+      "Bitcoin",
+      5959280230.93,
+      "Ethereum",
+      414729135.46,
+      "XRP",
+      281503817.07,
+      "Litecoin",
+      139212896.39,
+      "Dogecoin",
+      30408801.25,
+      "Dash",
+      23439988.32,
+      "MaidSafeCoin",
+      16975407.95,
+      "BitShares",
+      11531708.7,
+      "Stellar",
+      10654770.71,
+      "Peercoin",
+      10613352.76,
+      "Factom",
+      9413066.26,
+      "Nxt",
+      8932333.58
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 14,
+    "coins": [
+      "Bitcoin",
+      6194714911.47,
+      "Ethereum",
+      403647718.42,
+      "XRP",
+      292842287.05,
+      "Litecoin",
+      142857491.81,
+      "Dogecoin",
+      31030988.01,
+      "Dash",
+      23662295.82,
+      "MaidSafeCoin",
+      20771534.58,
+      "BitShares",
+      11536306.17,
+      "Peercoin",
+      10663729.16,
+      "Stellar",
+      10594675.53,
+      "Factom",
+      9748992.51,
+      "Nxt",
+      9566196.4
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 15,
+    "coins": [
+      "Bitcoin",
+      6089058352.66,
+      "Ethereum",
+      407525078.62,
+      "XRP",
+      294225742.82,
+      "Litecoin",
+      141654484.49,
+      "Dogecoin",
+      30738876.1,
+      "MaidSafeCoin",
+      24268795.21,
+      "Dash",
+      23528314.22,
+      "BitShares",
+      11778555.02,
+      "Stellar",
+      10657495.19,
+      "Peercoin",
+      10413326.66,
+      "Factom",
+      9722477.2,
+      "Nxt",
+      9129755.69
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 16,
+    "coins": [
+      "Bitcoin",
+      6201585424.98,
+      "Ethereum",
+      332648604.93,
+      "XRP",
+      288097948.79,
+      "Litecoin",
+      142883752.5,
+      "Dogecoin",
+      30070865.68,
+      "Dash",
+      21688751.58,
+      "MaidSafeCoin",
+      21341095.35,
+      "BitShares",
+      13018078.22,
+      "Stellar",
+      12814951.27,
+      "Peercoin",
+      10414186.7,
+      "Monero",
+      10328775.84,
+      "Factom",
+      10148293.57
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 17,
+    "coins": [
+      "Bitcoin",
+      6337625713.46,
+      "Ethereum",
+      289721984.18,
+      "XRP",
+      277428251.75,
+      "Litecoin",
+      144356954.62,
+      "Dogecoin",
+      28721113.88,
+      "MaidSafeCoin",
+      23155442.47,
+      "Dash",
+      22908239.21,
+      "BitShares",
+      10872933.42,
+      "Peercoin",
+      10477092.69,
+      "Stellar",
+      10439024.09,
+      "Emercoin",
+      9786668.07,
+      "Factom",
+      9563617.04
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 18,
+    "coins": [
+      "Bitcoin",
+      6431549229.44,
+      "Ethereum",
+      339328630.49,
+      "XRP",
+      272566567.08,
+      "Litecoin",
+      144864920.81,
+      "Dogecoin",
+      28657193.69,
+      "Dash",
+      21997403.35,
+      "MaidSafeCoin",
+      21571650.81,
+      "BitShares",
+      10912668.54,
+      "Peercoin",
+      10338859.01,
+      "Stellar",
+      10266615.78,
+      "Factom",
+      9470939.74,
+      "Emercoin",
+      9118101.57
+    ]
+  },
+  {
+    "year": 2016,
+    "month": 2,
+    "day": 19,
+    "coins": [
+      "Bitcoin",
+      6408882643.76,
+      "Ethereum",
+      365578011.23,
+      "XRP",
+      281070562.44,
+      "Litecoin",
+      144969148.68,
+      "Dogecoin",
+      30621592.21,
+      "MaidSafeCoin",
+      22664528.42,
+      "Dash",
+      21879102.4,
+      "BitShares",
+      11271660.06,
+      "Peercoin",
+      10449015.11,
+      "Stellar",
+      10208708.97,
+      "Factom",
+      9356284.27,
+      "Monero",
+      9065941.9
+    ]
+  }
+]
+    </script>
+
+    <script>
+        const N_BARS = 12;
+        const ANIMATION_DURATION = 500; // ms for each bar transition
+        const FRAME_INTERVAL = 700; // ms between frames (should be > ANIMATION_DURATION)
+
+        // Dimensions
+        const margin = { top: 30, right: 120, bottom: 30, left: 100 };
+        const width = 800 - margin.left - margin.right;
+        const height = 500 - margin.top - margin.bottom;
+
+        // SVG Setup
+        const svg = d3.select("#chart")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Scales
+        const xScale = d3.scaleLinear().range([0, width]);
+        const yScale = d3.scaleBand().range([0, height]).padding(0.15);
+        const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
+
+        // Axes
+        const xAxis = d3.axisBottom(xScale)
+            .ticks(5)
+            .tickSize(-height)
+            .tickFormat(d3.format(".2s"));
+
+        const yAxis = d3.axisLeft(yScale)
+            .tickSize(0)
+            .tickPadding(10);
+
+        svg.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", `translate(0,${height})`)
+            .style("font-size", "12px");
+
+        svg.append("g")
+            .attr("class", "y-axis")
+            .style("font-size", "12px");
+
+        svg.append("text")
+            .attr("class", "axis-label")
+            .attr("text-anchor", "middle")
+            .attr("x", width / 2)
+            .attr("y", height + margin.bottom)
+            .text("Market Cap");
+            
+        const dateDisplay = d3.select("#date-display");
+
+        let data = [];
+        let currentFrameIndex = 0;
+        let animationInterval;
+
+        function parseDataEntry(entry) {
+            const coinsData = [];
+            for (let i = 0; i < entry.coins.length; i += 2) {
+                if (entry.coins[i] && typeof entry.coins[i+1] === 'number') {
+                    coinsData.push({
+                        name: String(entry.coins[i]),
+                        value: Number(entry.coins[i+1])
+                    });
+                }
+            }
+            return coinsData
+                .sort((a, b) => b.value - a.value)
+                .slice(0, N_BARS);
+        }
+
+        function updateFrame() { // Removed frameData argument as we use data[currentFrameIndex]
+            if (currentFrameIndex >= data.length) return; // Should be caught by interval clear, but good practice
+
+            const currentEntry = data[currentFrameIndex];
+            const { year, month, day } = currentEntry; // Corrected: year, month, day
+            const currentCoins = parseDataEntry(currentEntry);
+
+            // Update date display
+            // Note: JavaScript month is 0-indexed (0 for Jan, 11 for Dec)
+            // Assuming your 'month' field is 1-indexed (1 for Jan)
+            const currentDate = new Date(year, month - 1, day); 
+            dateDisplay.text(`Date: ${currentDate.toLocaleDateString()}`); // Shows locale-specific date, e.g., M/D/YYYY or D/M/YYYY
+            // Or for a specific format like YYYY-MM-DD:
+            // dateDisplay.text(`Date: ${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`);
+
+
+            // Update scales
+            xScale.domain([0, d3.max(currentCoins, d => d.value) || 1]);
+            yScale.domain(currentCoins.map(d => d.name));
+
+            // Update axes
+            svg.select(".x-axis")
+                .transition().duration(ANIMATION_DURATION)
+                .call(xAxis);
+            svg.select(".y-axis")
+                .transition().duration(ANIMATION_DURATION)
+                .call(yAxis)
+                .selectAll(".tick text")
+                .call(wrap, margin.left - 10);
+
+            // Data join for bars
+            const bars = svg.selectAll(".bar")
+                .data(currentCoins, d => d.name);
+
+            bars.enter()
+                .append("rect")
+                .attr("class", "bar")
+                .attr("x", 0)
+                .attr("y", d => yScale(d.name) + yScale.bandwidth())
+                .attr("width", 0)
+                .attr("height", yScale.bandwidth())
+                .style("fill", d => colorScale(d.name))
+              .merge(bars)
+                .transition().duration(ANIMATION_DURATION)
+                .attr("y", d => yScale(d.name))
+                .attr("width", d => xScale(d.value))
+                .attr("height", yScale.bandwidth())
+                .style("fill", d => colorScale(d.name));
+
+            bars.exit()
+                .transition().duration(ANIMATION_DURATION)
+                .attr("width", 0)
+                .attr("y", d => yScale(d.name) || (height + yScale.bandwidth()))
+                .remove();
+
+            // Data join for value labels on bars
+            const labels = svg.selectAll(".bar-label")
+                .data(currentCoins, d => d.name);
+
+            labels.enter()
+                .append("text")
+                .attr("class", "bar-label")
+                .attr("x", d => xScale(0) + 5)
+                .attr("y", d => yScale(d.name) + yScale.bandwidth() / 2 + 4)
+                .style("fill-opacity", 0)
+              .merge(labels)
+                .transition().duration(ANIMATION_DURATION)
+                .attr("x", d => xScale(d.value) + 6)
+                .attr("y", d => yScale(d.name) + yScale.bandwidth() / 2 + 4)
+                .tween("text", function(d) {
+                    const i = d3.interpolate(parseFormattedValue(this.textContent) || 0, d.value);
+                    return function(t) { this.textContent = d3.format(".3s")(i(t)); };
+                })
+                .style("fill-opacity", 1);
+
+            labels.exit()
+                .transition().duration(ANIMATION_DURATION)
+                .attr("x", d => xScale(0) + 5)
+                .style("fill-opacity", 0)
+                .remove();
+        }
+
+        function parseFormattedValue(s) {
+            if (!s || typeof s !== 'string') return 0;
+            s = s.replace(/,/g, '');
+            const suffixes = { k: 1e3, M: 1e6, B: 1e9, T: 1e12 };
+            const suffix = s.slice(-1);
+            if (suffixes[suffix]) {
+                return parseFloat(s.slice(0, -1)) * suffixes[suffix];
+            }
+            return parseFloat(s);
+        }
+
+        function wrap(text, width) {
+            text.each(function() {
+                var text = d3.select(this),
+                    words = text.text().split(/\s+/).reverse(),
+                    word,
+                    line = [],
+                    lineNumber = 0,
+                    lineHeight = 1.1, // ems
+                    y = text.attr("y"),
+                    dy = parseFloat(text.attr("dy")) || 0,
+                    tspan = text.text(null).append("tspan").attr("x", -10).attr("y", y).attr("dy", dy + "em");
+                while (word = words.pop()) {
+                    line.push(word);
+                    tspan.text(line.join(" "));
+                    if (tspan.node().getComputedTextLength() > width) {
+                        line.pop();
+                        tspan.text(line.join(" "));
+                        line = [word];
+                        tspan = text.append("tspan").attr("x", -10).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+                    }
+                }
+            });
+        }
+
+        function startAnimation() {
+            if (animationInterval) clearInterval(animationInterval);
+
+            if (data.length > 0) {
+                updateFrame(); // Initial frame
+            }
+
+            animationInterval = setInterval(() => {
+                currentFrameIndex++;
+                if (currentFrameIndex >= data.length) {
+                    clearInterval(animationInterval);
+                    console.log("Race finished!");
+                    return;
+                }
+                updateFrame();
+            }, FRAME_INTERVAL);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const rawData = JSON.parse(document.getElementById('raceData').textContent);
+            
+            // Sort data by date: year, then month, then day
+            data = rawData.sort((a, b) => {
+                if (a.year !== b.year) return a.year - b.year;
+                if (a.month !== b.month) return a.month - b.month; // Corrected: month
+                return a.day - b.day; // Corrected: day
+            });
+
+            if (data.length === 0) {
+                dateDisplay.text("No data to display.");
+                return;
+            }
+            
+            currentFrameIndex = 0;
+            startAnimation();
+        });
+
+    </script>
+</body>
 </html>
